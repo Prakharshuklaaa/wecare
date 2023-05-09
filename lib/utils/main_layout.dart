@@ -38,16 +38,14 @@ class _MainLayoutState extends State<MainLayout> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
         onTap: (page) {
-          setState(
-            () {
-              currentPage = page;
-              _page.animateToPage(
-                page,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-              );
-            },
-          );
+          setState(() {
+            currentPage = page;
+            _page.animateToPage(
+              page,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          });
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -55,7 +53,7 @@ class _MainLayoutState extends State<MainLayout> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.solidCalendarCheck),
+            icon: FaIcon(FontAwesomeIcons.calendarCheck),
             label: 'Appointment',
           ),
         ],

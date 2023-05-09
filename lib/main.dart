@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wecare/screens/auth_page.dart';
+import 'package:wecare/screens/booking_page.dart';
+import 'package:wecare/screens/doctor_details.dart';
+import 'package:wecare/screens/success_book.dart';
 import 'package:wecare/utils/config.dart';
 import 'package:wecare/utils/main_layout.dart';
 
@@ -57,6 +60,10 @@ class MyApp extends StatelessWidget {
 
         //this if for main layout after login
         'main': (context) => const MainLayout(),
+
+        'doc_details': (context) => const DoctorDetails(),
+        'booking_page': (context) => const BookingPage(),
+        'success_booking': (context) => const AppointmentBooked(),
       },
     );
   }
