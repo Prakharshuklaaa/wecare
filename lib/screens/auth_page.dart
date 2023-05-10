@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wecare/components/login_form.dart';
+import 'package:wecare/components/sign_upform.dart';
 import 'package:wecare/components/social_button.dart';
 import 'package:wecare/utils/text.dart';
 import 'package:wecare/utils/config.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:wecare/components/sign_upform.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -35,7 +40,7 @@ class _AuthPageState extends State<AuthPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Config.spaceSmall,
+
               Text(
                 AppText.enText['signIn_text']!,
                 style: const TextStyle(
@@ -81,29 +86,8 @@ class _AuthPageState extends State<AuthPage> {
                   SocialButton(social: 'facebook'),
                 ],
               ),
-              Config.spaceSmall,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    //  why !
-                    AppText.enText['signUp_text']!,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.grey.shade500,
-                    ),
-                  ),
-                  const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              )
+
+              // Add the button to navigate to the sign-up form page
             ],
           ),
         ),

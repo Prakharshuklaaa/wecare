@@ -37,6 +37,9 @@ dependencies:
   rating_dialog: ^2.0.4
   shared_preferences: ^2.0.15
   provider: ^6.0.4
+  cloud_firestore: ^4.6.0
+  firebase_core: ^2.11.0
+  firebase_auth: ^4.5.0
   
 
 
