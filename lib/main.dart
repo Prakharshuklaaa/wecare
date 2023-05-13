@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: 'WeCare',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         //pre defined input decoration
         inputDecorationTheme: const InputDecorationTheme(
@@ -66,7 +67,6 @@ class MyApp extends StatelessWidget {
 
         //this if for main layout after login
         'main': (context) => const MainLayout(),
-
         'doc_details': (context) => const DoctorDetails(),
         'booking_page': (context) => const BookingPage(),
         'success_booking': (context) => const AppointmentBooked(),

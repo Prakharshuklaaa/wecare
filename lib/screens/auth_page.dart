@@ -1,13 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wecare/components/login_form.dart';
-import 'package:wecare/components/sign_upform.dart';
 import 'package:wecare/components/social_button.dart';
 import 'package:wecare/utils/text.dart';
 import 'package:wecare/utils/config.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:wecare/components/sign_upform.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -50,8 +45,19 @@ class _AuthPageState extends State<AuthPage> {
               ),
               Config.spaceSmall,
               //login components here
-              const LoginForm(),
-              Config.spaceSmall,
+              Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: const [
+                      LoginForm(),
+
+                      // Add other content here if needed
+                    ],
+                  ),
+                ),
+              ),
+
               Center(
                 child: TextButton(
                     onPressed: () {},

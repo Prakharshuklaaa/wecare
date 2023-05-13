@@ -7,6 +7,9 @@ import 'package:wecare/utils/config.dart';
 import 'package:wecare/screens/appointment_page.dart';
 import 'package:wecare/utils/main_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,6 +45,88 @@ class _HomePageState extends State<HomePage> {
       "category": "Being More HAppy",
     },
   ];
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  // @override
+  // //initialize Firebase Cloud Messaging
+  // void initState() {
+  //   //initState() is a lifecycle method that is commonly used to
+  //   //perform one-time setup tasks when a widget is created.
+  //   super.initState();
+  //   initializeFirebaseMessaging();
+  // }
+
+  // void initializeFirebaseMessaging() {
+  //   _firebaseMessaging.requestPermission(
+  //     alert: true,
+  //     badge: true,
+  //     sound: true,
+  //   );
+
+  //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  //     if (message.notification != null) {
+  //       // Show the notification using the Zen Quotes API
+  //       showZenQuoteNotification(message.notification!.title ?? '',
+  //           message.notification!.body ?? '');
+  //     }
+  //   });
+  // }
+
+  Future<String> fetchRandomQuote() async {
+    final response =
+        await http.get(Uri.parse('https://zenquotes.io/api/random'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data[0]['q'] + ' - ' + data[0]['a'];
+    } else {
+      throw Exception('Failed to fetch a random quote');
+    }
+  }
+
+  // Future<void> showZenQuoteNotification(String title, String body) async {
+  //   final randomQuote = await fetchRandomQuote();
+
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text(title),
+  //         content: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Text(body),
+  //             SizedBox(height: 10),
+  //             Text(randomQuote),
+  //           ],
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: Text('Close'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  bool showNotification = true;
+
+  // Future<String> fetchDailyQuote() async {
+  //   final response =
+  //       await http.get(Uri.parse('https://zenquotes.io/api/random'));
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body);
+  //     return data[0]['q'] + ' - ' + data[0]['a'];
+  //   } else {
+  //     throw Exception('Failed to fetch the daily quote');
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     Config().init(context);
@@ -63,12 +148,59 @@ class _HomePageState extends State<HomePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Prakhar Shukla', //hard core the user's name at first
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            const Text(
+                              'Prakhar Shukla',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            if (showNotification)
+                              IconButton(
+                                icon: Icon(Icons.notifications),
+                                color: Colors.blue,
+                                onPressed: () async {
+                                  final randomQuote = await fetchRandomQuote();
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    Colors.blue,
+                                                    Colors.teal,
+                                                  ]),
+                                            ),
+                                            padding: const EdgeInsets.all(16),
+                                            child: Text('Daily Quote')),
+                                        content: Text(
+                                          textAlign: TextAlign.left,
+                                          randomQuote,
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Close'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                          ],
                         ),
                         TextButton(
                           style: TextButton.styleFrom(
@@ -91,11 +223,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-
                 Config.spaceSmall,
-                //category listing
                 const Text(
-                  'Your Conserns',
+                  'Your Concerns',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wecare/utils/config.dart';
 import 'package:wecare/components/button.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wecare/components/sign_upform.dart';
 
@@ -14,9 +13,11 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final _emailCOntroller = TextEditingController();
-  final _passCOntroller = TextEditingController();
-  bool obsecurePass = true;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+  String? _errorMessage;
+  bool _isLoading = false;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -28,7 +29,7 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           TextFormField(
-            controller: _emailCOntroller,
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
             cursorColor: Config.primaryColor,
             decoration: const InputDecoration(
@@ -41,9 +42,9 @@ class _LoginFormState extends State<LoginForm> {
           ),
           Config.spaceSmall,
           TextFormField(
-            controller: _passCOntroller,
+            controller: _passwordController,
             keyboardType: TextInputType.visiblePassword,
-            obscureText: obsecurePass,
+            obscureText: _obscurePassword,
             cursorColor: Config.primaryColor,
             decoration: InputDecoration(
               hintText: 'Password',
@@ -54,10 +55,10 @@ class _LoginFormState extends State<LoginForm> {
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {
-                    obsecurePass = !obsecurePass;
+                    _obscurePassword = !_obscurePassword;
                   });
                 },
-                icon: obsecurePass
+                icon: _obscurePassword
                     ? const Icon(
                         Icons.visibility_off_outlined,
                         color: Colors.black,
@@ -69,48 +70,68 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
           ),
-          Config.spaceSmall,
-          Button(
-            width: double.infinity,
-            title: 'Sign In',
-            onPressed: () async {
-              try {
-                // Call Firebase sign-in method with email and password
-                final UserCredential userCredential =
-                    await _auth.signInWithEmailAndPassword(
-                  email: _emailCOntroller.text.trim(),
-                  password: _passCOntroller.text,
-                );
-
-                // Check if sign-in was successful
-                if (userCredential.user != null) {
-                  // Navigate to the main screen
-                  Navigator.of(context).pushNamed('main');
-                }
-              } catch (e) {
-                // Handle sign-in error (display error message, etc.)
-                print('Sign-in error: $e');
-              }
-            },
-            disable: false,
-          ),
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Config.primaryColor),
+          if (_errorMessage != null)
+            Text(
+              _errorMessage!,
+              style: TextStyle(color: Colors.red),
+            ),
+          if (!_isLoading)
+            Button(
+              width: double.infinity,
+              title: 'Sign In',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignUpForm(),
-                  ),
-                );
+                Navigator.pushReplacementNamed(context, 'main');
               },
-              child: const Text('Sign Up',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  )))
+              // onPressed: ()
+              // async {
+              //   setState(() {
+              //     _isLoading = true;
+              //   });
+
+              //   try {
+              //     final UserCredential userCredential =
+              //         await _auth.signInWithEmailAndPassword(
+              //       email: _emailController.text.trim(),
+              //       password: _passwordController.text,
+              //     );
+
+              //     if (userCredential.user != null) {
+              //       Navigator.of(context).pushNamed('main');
+              //     }
+              //   } on FirebaseAuthException catch (e) {
+              //     setState(() {
+              //       _errorMessage = "Incorrect Email or Password";
+              //     });
+              //   }
+
+              //   setState(() {
+              //     _isLoading = false;
+              //   });
+              // },
+              disable: false,
+            ),
+          if (_isLoading) CircularProgressIndicator(),
+          TextButton(
+            style: ElevatedButton.styleFrom(
+                // backgroundColor: Config.primaryColor,
+                ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SignUpForm(),
+                ),
+              );
+            },
+            child: const Text(
+              'Sign Up',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Config.primaryColor,
+              ),
+            ),
+          ),
         ],
       ),
     );

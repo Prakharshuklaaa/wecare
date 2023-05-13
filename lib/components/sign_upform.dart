@@ -23,12 +23,20 @@ class _SignUpFormState extends State<SignUpForm> {
         ),
         child: SafeArea(
           child: Column(
-            children: [
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                'Welcome',
+                style: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Config.spaceSmall,
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    Config.spaceBig,
                     TextFormField(
                       decoration: const InputDecoration(
                         labelText: 'Email',

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:wecare/screens/Journal.dart';
 import 'package:wecare/screens/home_page.dart';
 import 'package:wecare/screens/appointment_page.dart';
+import 'package:wecare/screens/chat_gpt.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({Key? key}) : super(key: key);
@@ -11,11 +13,6 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-// In Flutter, PageController is a class that is used
-// to control a PageView widget. A PageView widget displays
-// a scrollable list of pages, and the PageController is responsible
-// for managing the position of the currently visible page.
-
   int currentPage = 0;
   final PageController _page = PageController();
 
@@ -26,13 +23,13 @@ class _MainLayoutState extends State<MainLayout> {
         controller: _page,
         onPageChanged: ((value) {
           setState(() {
-            //update page index when switch page
             currentPage = value;
           });
         }),
-        children: const <Widget>[
-          HomePage(),
-          AppointmentPage(),
+        children: <Widget>[
+          const HomePage(),
+          const AppointmentPage(),
+          Journal(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -55,6 +52,10 @@ class _MainLayoutState extends State<MainLayout> {
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.calendarCheck),
             label: 'Appointment',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.book),
+            label: 'Dairy',
           ),
         ],
       ),
