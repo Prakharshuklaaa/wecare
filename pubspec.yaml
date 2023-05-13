@@ -45,8 +45,8 @@ dependencies:
   dart_openai: ^1.9.91
   http: ^0.13.6
   path_provider: ^2.0.14
-  tflite_flutter: ^0.9.5
-  sp_ai_simple_bpe_tokenizer: ^0.0.1+4
+  
+  
   flutter_local_notifications: ^14.0.0+2
   firebase_messaging: ^14.6.0
 
