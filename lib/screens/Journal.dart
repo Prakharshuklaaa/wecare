@@ -128,11 +128,11 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.greenAccent,
       title: const Text(
         'Journal Entries',
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(
-          color: Colors.black,
+          color: Colors.white,
           onPressed: () => _startNewEntry(context),
           icon: const Icon(Icons.add),
         ),
@@ -164,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () => _startNewEntry(context),
         child: const Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );

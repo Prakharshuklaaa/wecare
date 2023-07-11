@@ -7,7 +7,6 @@ import 'package:wecare/screens/success_book.dart';
 import 'package:wecare/utils/config.dart';
 import 'package:wecare/utils/main_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
 // By using a GlobalKey to access the NavigatorState,
 // you can perform actions such as pushing and popping screens from the navigation stack programmatically.
   static final navigatorKey = GlobalKey<NavigatorState>();
-
+ 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

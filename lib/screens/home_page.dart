@@ -174,8 +174,8 @@ class _HomePageState extends State<HomePage> {
                                                   begin: Alignment.topCenter,
                                                   end: Alignment.bottomCenter,
                                                   colors: [
-                                                    Colors.blue,
-                                                    Colors.teal,
+                                                    Colors.greenAccent,
+                                                    Colors.white,
                                                   ]),
                                             ),
                                             padding: const EdgeInsets.all(16),

@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wecare/screens/Journal.dart';
 import 'package:wecare/screens/home_page.dart';
 import 'package:wecare/screens/appointment_page.dart';
-import 'package:wecare/screens/chat_gpt.dart';
+import 'package:wecare/screens/test.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({Key? key}) : super(key: key);
@@ -30,6 +30,7 @@ class _MainLayoutState extends State<MainLayout> {
           const HomePage(),
           const AppointmentPage(),
           Journal(),
+          test(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -56,6 +57,10 @@ class _MainLayoutState extends State<MainLayout> {
           BottomNavigationBarItem(
             icon: FaIcon(FontAwesomeIcons.book),
             label: 'Dairy',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.checkSquare),
+            label: 'Quiz',
           ),
         ],
       ),
